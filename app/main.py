@@ -22,7 +22,7 @@ def get_posts(db: Session = Depends(get_db)):
     return posts
 
 
-@app.post('/books', response_model=schemas.Book)
+@app.post('/books', response_model=schemas.Book, status_code=status.HTTP_201_CREATED)
 def create_posts(book: schemas.BookCreate, db: Session = Depends(get_db)):
     books_dict = book.model_dump()
     new_book = models.Book(**books_dict)
@@ -39,12 +39,12 @@ def get_post(id: int, db: Session = Depends(get_db)):
     return book
 
 
-@app.delete('/books/{id}')
+@app.delete('/books/{id}', status_code=status.HTTP_204_NO_CONTENT)
 def delete_post(id: int, db: Session = Depends(get_db)):
     book_query = db.query(models.Book).filter(models.Book.id == id)
     book = book_query.first()
-    book_title = book.title
     validate_book(book)
+    book_title = book.title
     book_query.delete(synchronize_session=False)
     db.commit()
 
