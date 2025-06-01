@@ -108,3 +108,5 @@ Pipfile.lock
 .mypy_cache/
 
 .idea/*
+
+test.db
