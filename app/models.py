@@ -6,7 +6,7 @@ from .db import Base
 class Book(Base):
     __tablename__ = "books"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, index=True)
+    id = Column(Integer, primary_key=True, index=True)
     title = Column(String, nullable=False)
     author = Column(String, nullable=False)
     year = Column(Integer, nullable=False)
