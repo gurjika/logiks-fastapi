@@ -13,16 +13,24 @@ phases:
     commands:
       - echo "Running pre-build checks..."
 
+
+      - echo "Fetching secrets and writing to .env in the project directory"
+      - |
+        aws secretsmanager get-secret-value --secret-id prod/strikem \
+        --query SecretString --output text | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' > $CODEBUILD_SRC_DIR/.env
+
+      - echo ".env file created:"
+      - cat $CODEBUILD_SRC_DIR/.env
+
   build:
-    commands:
+    commands: 
 
       - echo "Running Tests"
 
       - pytest -v
 
-      
+
       - echo "Checking if FastAPI app runs without errors..."
-      # Start app in background with timeout to test if it boots without crashing
       - |
         python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 &
         APP_PID=$!
