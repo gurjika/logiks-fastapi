@@ -1,4 +1,4 @@
-# 📷 FastAPI Image Upload Service on AWS
+# 📷 FastAPI Book API
 
 This project is a simple **FastAPI** application, developed for Logiks Solutions and deployed on AWS.
 You can access the API here https://books-fastapi.site.
